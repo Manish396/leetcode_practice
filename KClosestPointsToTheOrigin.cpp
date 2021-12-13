@@ -1,18 +1,15 @@
 class Solution {
 public:
+    static bool cmp(vector<int>&p1, vector<int>&p2){
+        return ((p1[0]*p1[0] + p1[1] *p1[1]) < (p2[0] * p2[0] + p2[1]*p2[1]));
+    }
     vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
         vector<vector<int>>res;
         int n = points.size();
-        vector<pair<double, pair<int, int>>>mp;
-        for(int i = 0; i < n; i++){
-            double dist = sqrt(points[i][0]*points[i][0] + points[i][1]*points[i][1]);
-            mp.push_back({dist, make_pair(points[i][0], points[i][1])});
-        }
-        sort(mp.begin(), mp.end());
-        for(auto it: mp){
+        sort(points.begin(), points.end(), cmp);
+        for(auto it: points){
             if(k == 0) break;
-            vector<int>temp = {it.second.first, it.second.second};
-            res.push_back(temp);
+            res.push_back(it);
             k--;
         }
         return res;
